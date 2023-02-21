@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import "./Home.css"
 
 
@@ -16,13 +16,27 @@ const Home = () => {
         })
     }).then(res => res.json())
       .then(data => alert(data.msg))
+      .then(window.location.reload())
   }
+  const [todos, setTodos] = useState([])
+  console.log(todos);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/')
+            .then(res => res.json())
+            .then(todo => setTodos(todo))
+
+
+
+    }, [])
+
+
 
 
   return (
     <div className='container'>
       <form className='site-form' onSubmit={(e)=>createTodo(e)}>
-        <input name='text' className='input' type="text" placeholder='New task...' />
+        <input name='title' className='input' type="text" placeholder='New task...' />
       </form>
       <div className="task-category">
         <p className='category-links'>All</p>
@@ -30,16 +44,19 @@ const Home = () => {
         <p className='category-links'>Completed</p>
       </div>
       <div className='task-wrapper'>
-        <div className='tasks'>
-          <input className='checkbox' type="checkbox" name="" id="" />
-          <p className='todo-title'>Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className='tasks'>
-          <input className='checkbox' type="checkbox" name="" id="" />
-          <p className='todo-title'>Lorem ipsum dolor sit amet.</p>
-        </div>
-      </div>
+        {
+          todos.map(el=>{
+            console.log(el);
+            return(
+              <div key={el.id} className='tasks'>
+                <input className='checkbox' type="checkbox"  />
+                <p className='todo-title'>{el.title}</p>
+              </div>
+            )
+          })
+        }
 
+      </div>
     </div>
   )
 }

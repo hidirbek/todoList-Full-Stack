@@ -32,12 +32,13 @@ body{
 }
 .task-category{
   margin: 10px 0;
-
+  display: flex;
 }
 .category-links{
   font-size: 18px;
   text-decoration: none;
   color: dodgerblue;
+  cursor: pointer;
 }
 .category-links:hover{
   color: rgb(26, 114, 202);
